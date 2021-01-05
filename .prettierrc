@@ -3,7 +3,8 @@
   "printWidth": 80,
   "tabWidth": 2,
   "singleQuote": true,
-  "trailingComma": "all",
+  "trailingComma": "none",
   "jsxBracketSameLine": false,
-  "semi": false
+  "semi": false,
+  "react/jsx-max-props-per-line": [1, { "when": "always" }]
 }

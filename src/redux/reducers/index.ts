@@ -3,9 +3,11 @@ import { combineReducers } from 'redux';
 import * as actionTypes from '../actions/actionTypes';
 
 import login from './login/loginReducer';
+import registration from './registration/registrationReducer';
 
 const appReducer = combineReducers({
   login,
+  registration
 });
 
 const rootReducer = (state: any, action: any) => {

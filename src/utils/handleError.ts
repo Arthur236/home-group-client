@@ -1,4 +1,4 @@
-export default (error: any) => {
+const handleError = (error: any) => {
   let message = '';
 
   if (error) {
@@ -19,3 +19,5 @@ export default (error: any) => {
     return message;
   }
 };
+
+export default handleError;

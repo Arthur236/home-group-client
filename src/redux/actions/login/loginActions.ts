@@ -69,10 +69,13 @@ export const login = (values: LoginInput, redirect: Function) => {
     dispatch(loginLoading(true));
 
     return axios
-      .post(`${API_URL}/v1/auth`, values)
+      .post(`${API_URL}/auth/login`, values)
       .then(async (res) => {
-        const token = res.data?.data?.token;
-        axios.defaults.headers.common.Authorization = res.data?.data?.token;
+        const data = res.data?.data;
+        const token = data?.token;
+        axios.defaults.headers.common.Authorization = token;
+
+        localStorage.setItem("token", JSON.stringify(token));
 
         dispatch(loginSuccess(res.data));
         dispatch(loginLoading(false));
