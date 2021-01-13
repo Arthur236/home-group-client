@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import MainWrapper from './components/wrappers/MainWrapper';
 import DashboardWrapper from './components/wrappers/DashboardWrapper';
+import ProtectedRoute from './components/auth/ProtectedRoute';
 
 import Dashboard from './components/Dashboard';
 import NotFound from './components/NotFound';
@@ -15,13 +16,13 @@ export default (
       <MainWrapper><Login /></MainWrapper>
     </Route>
 
-    <Route path='/register' exact>
+    <ProtectedRoute path='/register' exact>
       <MainWrapper><Register /></MainWrapper>
-    </Route>
+    </ProtectedRoute>
 
-    <Route path='/home' exact>
+    <ProtectedRoute path='/home' exact>
       <DashboardWrapper><Dashboard /></DashboardWrapper>
-    </Route>
+    </ProtectedRoute>
 
     <Route path='/' exact>
       <MainWrapper><Login /></MainWrapper>

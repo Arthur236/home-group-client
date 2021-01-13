@@ -9,9 +9,13 @@ import configureStore from './redux/store';
 import GlobalStyles from './globalStyles';
 import theme from './theme';
 
+import setAuthentication from './utils/setAuthentication';
+
 import './index.css';
 
 const store = configureStore();
+
+setAuthentication();
 
 ReactDOM.render(
   <Provider store={store}>
