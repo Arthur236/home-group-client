@@ -12,6 +12,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Page from '../../common/Page';
+import StatusMessage from '../../common/StatusMessage';
 
 import { commonTransitionVariants } from '../../../utils/animationVariants';
 import { LoginSchema } from '../../../utils/validationSchemas';
@@ -43,6 +44,8 @@ const Login = () => {
         animate='animate'
       >
         <Container maxWidth='sm'>
+          {loginState.error && <StatusMessage error={loginState.error} />}
+
           <Formik
             initialValues={initialValues}
             validationSchema={LoginSchema}

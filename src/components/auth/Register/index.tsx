@@ -12,6 +12,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Page from '../../common/Page';
+import StatusMessage from '../../common/StatusMessage';
 
 import { commonTransitionVariants } from '../../../utils/animationVariants';
 import { RegisterSchema } from '../../../utils/validationSchemas';
@@ -46,6 +47,8 @@ const Register = () => {
         animate='animate'
       >
         <Container maxWidth='sm'>
+          {registrationState.error && <StatusMessage error={registrationState.error} />}
+
           <Formik
             initialValues={initialValues}
             validationSchema={RegisterSchema}

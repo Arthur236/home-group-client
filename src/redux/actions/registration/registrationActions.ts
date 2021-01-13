@@ -35,28 +35,24 @@ export type RegisterActions =
 
 const registerLoading = (loading: boolean): RegisterLoadingActionInterface => ({
   type: actionTypes.REGISTER_LOADING,
-  loading,
+  loading
 });
 
 const registerSuccess = (payload: any): RegisterSuccessActionInterface => ({
   type: actionTypes.REGISTER_SUCCESS,
-  payload,
+  payload
 });
 
 const registerError = (error: any): RegisterErrorActionInterface => ({
   type: actionTypes.REGISTER_ERROR,
-  error,
+  error
 });
 
 export const register = (values: any, redirect: Function) => {
   return (dispatch: Dispatch<RegisterActions>) => {
     dispatch(registerLoading(true));
 
-    return axios({
-      method: 'post',
-      url: `${API_URL}/auth/register`,
-      data: values,
-    })
+    return axios.post(`${API_URL}/auth/register`, values)
       .then((res) => {
         dispatch(registerSuccess(res.data));
         dispatch(registerLoading(false));
@@ -64,10 +60,10 @@ export const register = (values: any, redirect: Function) => {
         redirect('/login');
       })
       .catch((error) => {
-        dispatch(registerError(error));
-        dispatch(registerLoading(false));
+        const err = handleError(error);
 
-        handleError(error);
+        dispatch(registerError(err));
+        dispatch(registerLoading(false));
       });
   };
 };

@@ -4,7 +4,7 @@ import { RegisterActions } from '../../actions/registration/registrationActions'
 const initialState: any = {
   registration: {},
   loading: false,
-  error: null,
+  error: '',
 };
 
 const registrationReducer = (state = initialState, action: RegisterActions) => {

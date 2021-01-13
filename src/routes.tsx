@@ -4,7 +4,6 @@ import { Route, Switch } from 'react-router-dom';
 import MainWrapper from './components/wrappers/MainWrapper';
 import DashboardWrapper from './components/wrappers/DashboardWrapper';
 
-import App from './components/App';
 import Dashboard from './components/Dashboard';
 import NotFound from './components/NotFound';
 import Login from './components/auth/Login';
@@ -25,7 +24,7 @@ export default (
     </Route>
 
     <Route path='/' exact>
-      <MainWrapper><App /></MainWrapper>
+      <MainWrapper><Login /></MainWrapper>
     </Route>
 
     <Route>

@@ -5,7 +5,7 @@ const initialState: any = {
   login: {},
   isAuthenticated: false,
   loading: false,
-  error: null,
+  error: '',
 };
 
 const loginReducer = (state = initialState, action: LoginActions) => {

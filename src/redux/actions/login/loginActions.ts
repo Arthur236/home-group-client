@@ -83,10 +83,10 @@ export const login = (values: LoginInput, redirect: Function) => {
         redirect('/');
       })
       .catch((error) => {
-        dispatch(loginError(error));
-        dispatch(loginLoading(false));
+        const err = handleError(error);
 
-        handleError(error);
+        dispatch(loginError(err));
+        dispatch(loginLoading(false));
       });
   };
 };
