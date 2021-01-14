@@ -15,6 +15,7 @@ import {
   User as UserIcon,
   Users as UsersIcon
 } from 'react-feather';
+import jwt from 'jsonwebtoken';
 
 import NavItem from './NavItem';
 
@@ -53,10 +54,12 @@ const NavBar: FC<NavBarProps> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
+  const decoded: any = jwt.decode(localStorage.getItem('token') || '');
+
   const user = {
     avatar: '/static/images/avatars/avatar_6.png',
-    jobTitle: 'Member',
-    name: 'User One'
+    jobTitle: decoded?.isAdmin ? 'Admin' : 'Member',
+    name: decoded?.firstName
   };
 
   const items = [

@@ -19,12 +19,14 @@ const registrationReducer = (state = initialState, action: RegisterActions) => {
       return {
         ...state,
         registration: action.payload,
+        loading: false
       };
 
     case actionTypes.REGISTER_ERROR:
       return {
         ...state,
         error: action.error,
+        loading: false
       };
 
     default:

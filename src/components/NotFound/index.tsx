@@ -8,7 +8,9 @@ import {
   makeStyles
 } from '@material-ui/core';
 
+import MainWrapper from '../wrappers/MainWrapper';
 import Page from '../common/Page';
+
 import notFoundImage from '../../assets/images/undraw_page_not_found.svg';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,48 +33,50 @@ const NotFound = () => {
   const history = useHistory();
 
   return (
-    <Page
-      className={classes.root}
-      title='404'
-    >
-      <Box
-        display='flex'
-        flexDirection='column'
-        height='100%'
-        justifyContent='center'
+    <MainWrapper>
+      <Page
+        className={classes.root}
+        title='404'
       >
-        <Container maxWidth='md'>
-          <Typography
-            align='center'
-            color='textPrimary'
-            variant='h1'
-          >
-            The page you are looking for isn’t here
-          </Typography>
-
-          <Box
-            display='flex'
-            flexDirection='column'
-            alignItems='center'
-          >
-            <img
-              alt='Under development'
-              className={classes.image}
-              src={notFoundImage}
-            />
-
-            <Button
-              color='primary'
-              size='large'
-              variant='contained'
-              onClick={() => history.push('/')}
+        <Box
+          display='flex'
+          flexDirection='column'
+          height='100%'
+          justifyContent='center'
+        >
+          <Container maxWidth='md'>
+            <Typography
+              align='center'
+              color='textPrimary'
+              variant='h1'
             >
-              Go Back Home
-            </Button>
-          </Box>
-        </Container>
-      </Box>
-    </Page>
+              The page you are looking for isn’t here
+            </Typography>
+
+            <Box
+              display='flex'
+              flexDirection='column'
+              alignItems='center'
+            >
+              <img
+                alt='Under development'
+                className={classes.image}
+                src={notFoundImage}
+              />
+
+              <Button
+                color='primary'
+                size='large'
+                variant='contained'
+                onClick={() => history.push('/')}
+              >
+                Go Back Home
+              </Button>
+            </Box>
+          </Container>
+        </Box>
+      </Page>
+    </MainWrapper>
   );
 };
 

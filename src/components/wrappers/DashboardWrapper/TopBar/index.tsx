@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import {
   AppBar,
   Badge,
@@ -34,7 +34,13 @@ const Index: FC<TopBarProps> = (props) => {
   const { onMobileNavOpen } = props;
 
   const classes = useStyles();
+  const history = useHistory();
   const [notifications] = useState([]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    history.push('/');
+  }
 
   return (
     <AppBar
@@ -63,7 +69,7 @@ const Index: FC<TopBarProps> = (props) => {
             </Badge>
           </IconButton>
 
-          <IconButton color="inherit">
+          <IconButton color="inherit" onClick={handleLogout} title="Log out">
             <InputIcon />
           </IconButton>
         </Hidden>

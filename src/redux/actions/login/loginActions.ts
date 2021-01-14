@@ -71,16 +71,16 @@ export const login = (values: LoginInput, redirect: Function) => {
     return axios
       .post(`${API_URL}/auth/login`, values)
       .then(async (res) => {
-        const data = res.data?.data;
+        const data = res.data;
         const token = data?.token;
         axios.defaults.headers.common.Authorization = token;
 
-        localStorage.setItem("token", JSON.stringify(token));
+        localStorage.setItem("token", token);
 
-        dispatch(loginSuccess(res.data));
+        dispatch(loginSuccess(data));
         dispatch(loginLoading(false));
 
-        redirect('/');
+        redirect('/home');
       })
       .catch((error) => {
         const err = handleError(error);

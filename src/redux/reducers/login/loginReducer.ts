@@ -3,7 +3,6 @@ import { LoginActions } from '../../actions/login/loginActions';
 
 const initialState: any = {
   login: {},
-  isAuthenticated: false,
   loading: false,
   error: '',
 };
@@ -20,14 +19,14 @@ const loginReducer = (state = initialState, action: LoginActions) => {
       return {
         ...state,
         login: action.payload,
-        isAuthenticated: true,
+        loading: false
       };
 
     case actionTypes.LOGIN_ERROR:
       return {
         ...state,
         error: action.error,
-        isAuthenticated: false,
+        loading: false
       };
 
     default:

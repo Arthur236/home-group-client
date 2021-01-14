@@ -4,6 +4,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 
+import DashboardWrapper from '../wrappers/DashboardWrapper';
 import Page from '../common/Page';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,15 +19,17 @@ const Dashboard = () => {
   const classes = useStyles();
 
   return (
-    <Page
-      className={classes.root}
-      title="Dashboard"
-    >
-      <Container maxWidth={false}>
-        Dashboard
-      </Container>
-    </Page>
+    <DashboardWrapper>
+      <Page
+        className={classes.root}
+        title='Dashboard'
+      >
+        <Container maxWidth={false}>
+          Dashboard
+        </Container>
+      </Page>
+    </DashboardWrapper>
   );
-}
+};
 
 export default Dashboard;
