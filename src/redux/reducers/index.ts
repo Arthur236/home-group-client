@@ -4,10 +4,14 @@ import * as actionTypes from '../actions/actionTypes';
 
 import login from './login/loginReducer';
 import registration from './registration/registrationReducer';
+import forgotPassword from './forgotPassword/forgotPasswordReducer';
+import resetPassword from './resetPassword/resetPasswordReducer';
 
 const appReducer = combineReducers({
   login,
-  registration
+  registration,
+  forgotPassword,
+  resetPassword
 });
 
 const rootReducer = (state: any, action: any) => {

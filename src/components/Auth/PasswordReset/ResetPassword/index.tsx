@@ -8,37 +8,42 @@ import {
   Typography
 } from '@material-ui/core';
 import { Formik } from 'formik';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import MainWrapper from '../../wrappers/MainWrapper';
-import Page from '../../common/Page';
-import StatusMessage from '../../common/StatusMessage';
+import MainWrapper from '../../../Wrappers/MainWrapper';
+import Page from '../../../Common/Page';
+import StatusMessage from '../../../Common/StatusMessage';
 
-import { commonTransitionVariants } from '../../../utils/animationVariants';
-import { LoginSchema } from '../../../utils/validationSchemas';
-import { AppState } from '../../../redux/reducers';
-import { login } from '../../../redux/actions/login/loginActions';
+import { commonTransitionVariants } from '../../../../utils/animationVariants';
+import { ResetPasswordSchema } from '../../../../utils/validationSchemas';
+import { AppState } from '../../../../redux/reducers';
+import { resetPassword } from '../../../../redux/actions/resetPassword/resetPasswordActions';
 
-import '../style.scss';
+import '../../style.scss';
 
-const Login = () => {
-  const { login: loginState } = useSelector((state: AppState) => state);
+const ResetPassword = () => {
+  const { resetPassword: resetPasswordState } = useSelector((state: AppState) => state);
   const dispatch = useDispatch();
   const history = useHistory();
+  const params: any = useParams();
 
   const initialValues = {
-    email: '',
-    password: ''
+    newPassword: '',
+    newPassword2: ''
   };
 
   const handleSubmit = (data: any) => {
-    dispatch(login(data, history.push));
+    const newData = {
+      ...data,
+      token: params.token
+    }
+    dispatch(resetPassword(newData, history.push));
   };
 
   return (
     <MainWrapper>
-      <Page title='Login'>
+      <Page title='Reset Password'>
         <motion.div
           className='auth-wrapper'
           variants={commonTransitionVariants}
@@ -46,11 +51,11 @@ const Login = () => {
           animate='animate'
         >
           <Container maxWidth='sm'>
-            {loginState.error && <StatusMessage error={loginState.error} />}
+            {resetPasswordState.error && <StatusMessage error={resetPasswordState.error} />}
 
             <Formik
               initialValues={initialValues}
-              validationSchema={LoginSchema}
+              validationSchema={ResetPasswordSchema}
               onSubmit={handleSubmit}
             >
               {({
@@ -63,38 +68,35 @@ const Login = () => {
                 }) => (
                 <form onSubmit={handleSubmit}>
                   <Box mb={3}>
-                    <Typography
-                      color='textPrimary'
-                      variant='h2'
-                    >
-                      Log in
+                    <Typography color='textPrimary' variant='h2'>
+                      Reset Password
                     </Typography>
                   </Box>
 
                   <TextField
-                    error={Boolean(touched.email && errors.email)}
+                    error={Boolean(touched.newPassword && errors.newPassword)}
                     fullWidth
-                    helperText={touched.email && errors.email}
-                    label='Email Address'
+                    helperText={touched.newPassword && errors.newPassword}
+                    label='New Password'
                     margin='normal'
-                    name='email'
+                    name='newPassword'
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.email}
-                    type='email'
+                    value={values.newPassword}
+                    type='password'
                     variant='outlined'
                   />
 
                   <TextField
-                    error={Boolean(touched.password && errors.password)}
+                    error={Boolean(touched.newPassword && errors.newPassword2)}
                     fullWidth
-                    helperText={touched.password && errors.password}
-                    label='Password'
+                    helperText={errors.newPassword2}
+                    label='Confirm New Password'
                     margin='normal'
-                    name='password'
+                    name='newPassword2'
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.password}
+                    value={values.newPassword2}
                     type='password'
                     variant='outlined'
                   />
@@ -106,15 +108,11 @@ const Login = () => {
                       size='large'
                       type='submit'
                       variant='contained'
-                      disabled={loginState.loading}
+                      disabled={resetPasswordState.loading}
                     >
-                      Log In
+                      Reset Password
                     </Button>
                   </Box>
-
-                  <Link to='/' style={{ color: '#3f51b5' }}>
-                    Forgot Password?
-                  </Link>
                 </form>
               )}
             </Formik>
@@ -125,4 +123,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ResetPassword;

@@ -8,3 +8,8 @@
   width: 100vw;
   height: 100vh;
 }
+
+.shadow {
+  -webkit-filter: drop-shadow(30.35rem 0.35rem 0.4rem rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0.35rem 0.35rem 0.4rem rgba(0, 0, 0, 0.5));
+}

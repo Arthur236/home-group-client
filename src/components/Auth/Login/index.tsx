@@ -8,40 +8,37 @@ import {
   Typography
 } from '@material-ui/core';
 import { Formik } from 'formik';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import DashboardWrapper from '../../wrappers/DashboardWrapper';
-import Page from '../../common/Page';
-import StatusMessage from '../../common/StatusMessage';
+import MainWrapper from '../../Wrappers/MainWrapper';
+import Page from '../../Common/Page';
+import StatusMessage from '../../Common/StatusMessage';
 
 import { commonTransitionVariants } from '../../../utils/animationVariants';
-import { RegisterSchema } from '../../../utils/validationSchemas';
+import { LoginSchema } from '../../../utils/validationSchemas';
 import { AppState } from '../../../redux/reducers';
-import { register } from '../../../redux/actions/registration/registrationActions';
+import { login } from '../../../redux/actions/login/loginActions';
 
 import '../style.scss';
 
-const Register = () => {
-  const { registration: registrationState } = useSelector((state: AppState) => state);
+const Login = () => {
+  const { login: loginState } = useSelector((state: AppState) => state);
   const dispatch = useDispatch();
   const history = useHistory();
 
   const initialValues = {
-    firstName: '',
-    lastName: '',
     email: '',
-    password: '',
-    password2: ''
+    password: ''
   };
 
   const handleSubmit = (data: any) => {
-    dispatch(register(data, history.push));
+    dispatch(login(data, history.push));
   };
 
   return (
-    <DashboardWrapper>
-      <Page title='Register'>
+    <MainWrapper>
+      <Page title='Login'>
         <motion.div
           className='auth-wrapper'
           variants={commonTransitionVariants}
@@ -49,11 +46,11 @@ const Register = () => {
           animate='animate'
         >
           <Container maxWidth='sm'>
-            {registrationState.error && <StatusMessage error={registrationState.error} />}
+            {loginState.error && <StatusMessage error={loginState.error} />}
 
             <Formik
               initialValues={initialValues}
-              validationSchema={RegisterSchema}
+              validationSchema={LoginSchema}
               onSubmit={handleSubmit}
             >
               {({
@@ -70,37 +67,9 @@ const Register = () => {
                       color='textPrimary'
                       variant='h2'
                     >
-                      Register
+                      Log in
                     </Typography>
                   </Box>
-
-                  <TextField
-                    error={Boolean(touched.firstName && errors.firstName)}
-                    fullWidth
-                    helperText={touched.firstName && errors.firstName}
-                    label='First Name'
-                    margin='normal'
-                    name='firstName'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.firstName}
-                    type='text'
-                    variant='outlined'
-                  />
-
-                  <TextField
-                    error={Boolean(touched.lastName && errors.lastName)}
-                    fullWidth
-                    helperText={touched.lastName && errors.lastName}
-                    label='Last Name'
-                    margin='normal'
-                    name='lastName'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.lastName}
-                    type='text'
-                    variant='outlined'
-                  />
 
                   <TextField
                     error={Boolean(touched.email && errors.email)}
@@ -130,20 +99,6 @@ const Register = () => {
                     variant='outlined'
                   />
 
-                  <TextField
-                    error={Boolean(touched.password && errors.password2)}
-                    fullWidth
-                    helperText={errors.password2}
-                    label='Confirm Password'
-                    margin='normal'
-                    name='password2'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.password2}
-                    type='password'
-                    variant='outlined'
-                  />
-
                   <Box my={2}>
                     <Button
                       color='primary'
@@ -151,19 +106,23 @@ const Register = () => {
                       size='large'
                       type='submit'
                       variant='contained'
-                      disabled={registrationState.loading}
+                      disabled={loginState.loading}
                     >
-                      Register
+                      Log In
                     </Button>
                   </Box>
+
+                  <Link to='/forgot-password' style={{ color: '#3f51b5' }}>
+                    Forgot Password?
+                  </Link>
                 </form>
               )}
             </Formik>
           </Container>
         </motion.div>
       </Page>
-    </DashboardWrapper>
+    </MainWrapper>
   );
 };
 
-export default Register;
+export default Login;

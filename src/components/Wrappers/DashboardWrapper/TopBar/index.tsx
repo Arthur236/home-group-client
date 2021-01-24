@@ -13,7 +13,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
 
-import Logo from '../../../common/Logo';
+import Logo from '../../../Common/Logo';
 
 type TopBarProps = {
   onMobileNavOpen: Function;
@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const Index: FC<TopBarProps> = (props) => {
+const TopBar: FC<TopBarProps> = (props) => {
   const { onMobileNavOpen } = props;
 
   const classes = useStyles();
@@ -87,4 +87,4 @@ const Index: FC<TopBarProps> = (props) => {
   );
 };
 
-export default Index;
+export default TopBar;

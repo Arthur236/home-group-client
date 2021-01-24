@@ -8,8 +8,8 @@ import {
   makeStyles
 } from '@material-ui/core';
 
-import MainWrapper from '../wrappers/MainWrapper';
-import Page from '../common/Page';
+import MainWrapper from '../Wrappers/MainWrapper';
+import Page from '../Common/Page';
 
 import notFoundImage from '../../assets/images/undraw_page_not_found.svg';
 

@@ -1,11 +1,15 @@
 import React from 'react';
 import {
+  colors,
   Container,
+  Grid,
   makeStyles
 } from '@material-ui/core';
+import { AttachMoney, Money, PeopleOutlined } from '@material-ui/icons';
 
-import DashboardWrapper from '../wrappers/DashboardWrapper';
-import Page from '../common/Page';
+import DashboardWrapper from '../Wrappers/DashboardWrapper';
+import Page from '../Common/Page';
+import DashboardCard from '../DashboardCard';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +29,34 @@ const Dashboard = () => {
         title='Dashboard'
       >
         <Container maxWidth={false}>
-          Dashboard
+          <Grid container spacing={3}>
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <DashboardCard
+                title="Total Contribution"
+                value="KSH 500,000"
+                icon={<AttachMoney />}
+                avatarColor={colors.red[600]}
+              />
+            </Grid>
+
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <DashboardCard
+                title="Total Members"
+                value="8"
+                icon={<PeopleOutlined />}
+                avatarColor={colors.green[600]}
+              />
+            </Grid>
+
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <DashboardCard
+                title="Total Fines"
+                value="KSH 10,000"
+                icon={<Money />}
+                avatarColor={colors.indigo[600]}
+              />
+            </Grid>
+          </Grid>
         </Container>
       </Page>
     </DashboardWrapper>

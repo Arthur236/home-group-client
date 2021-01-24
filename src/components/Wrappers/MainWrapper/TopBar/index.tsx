@@ -2,7 +2,7 @@ import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { AppBar, makeStyles, Toolbar } from '@material-ui/core';
 
-import Logo from '../../../common/Logo';
+import Logo from '../../../Common/Logo';
 
 const useStyles = makeStyles(() => ({
   banner: {

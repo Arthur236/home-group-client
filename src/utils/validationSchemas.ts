@@ -12,3 +12,12 @@ export const RegisterSchema = Yup.object().shape({
   password: Yup.string().min(6).max(255).required('Password is required'),
   password2: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
 });
+
+export const ForgotPasswordSchema = Yup.object().shape({
+  email: Yup.string().email('Must be a valid email').max(255).required('Email is required')
+});
+
+export const ResetPasswordSchema = Yup.object().shape({
+  newPassword: Yup.string().min(6).max(255).required('Password is required'),
+  newPassword2: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
+});

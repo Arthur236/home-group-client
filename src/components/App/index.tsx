@@ -4,7 +4,7 @@ import {
   Container,
 } from '@material-ui/core';
 
-import Page from '../common/Page';
+import Page from '../Common/Page';
 
 import { commonTransitionVariants } from '../../utils/animationVariants';
 
