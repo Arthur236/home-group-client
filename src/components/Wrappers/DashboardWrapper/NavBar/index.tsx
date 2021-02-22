@@ -1,5 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
+import jwt from 'jsonwebtoken';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Avatar,
   Box,
@@ -15,9 +17,11 @@ import {
   User as UserIcon,
   Users as UsersIcon
 } from 'react-feather';
-import jwt from 'jsonwebtoken';
 
 import NavItem from './NavItem';
+
+import { AppState } from '../../../../redux/reducers';
+import { fetchProfile } from '../../../../redux/actions/profile/fetchProfileActions';
 
 const useStyles = makeStyles(() => ({
   mobileDrawer: {
@@ -44,37 +48,41 @@ type NavBarProps = {
 const NavBar: FC<NavBarProps> = (props) => {
   const { onMobileClose, openMobile } = props;
 
+  const decoded: any = jwt.decode(localStorage.getItem('token') || '');
+
   const classes = useStyles();
+
+  const dispatch = useDispatch();
   const location = useLocation();
+  const { profile } = useSelector((state: AppState) => state);
+
+  const currentUser = profile.profile?.user;
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
       onMobileClose();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [location.pathname]);
 
-  const decoded: any = jwt.decode(localStorage.getItem('token') || '');
-
-  const user = {
-    avatar: '/static/images/avatars/avatar_6.png',
-    jobTitle: decoded?.isAdmin ? 'Admin' : 'Member',
-    name: decoded?.firstName
-  };
+  useEffect(() => {
+    dispatch(fetchProfile(decoded?.id));
+    // eslint-disable-next-line
+  }, []);
 
   const items = [
     {
-      href: '/app/dashboard',
+      href: '/home',
       icon: BarChartIcon,
       title: 'Dashboard'
     },
     {
-      href: '/app/dashboard',
+      href: '/members',
       icon: UsersIcon,
       title: 'Members'
     },
     {
-      href: '/app/account',
+      href: `/profile/${currentUser?._id}`,
       icon: UserIcon,
       title: 'Account'
     }
@@ -95,22 +103,22 @@ const NavBar: FC<NavBarProps> = (props) => {
         <Avatar
           className={classes.avatar}
           component={RouterLink}
-          src={user.avatar}
-          to="/app/account"
+          src={currentUser?.photo}
+          to={`/profile/${currentUser?._id}`}
         />
 
         <Typography
           color="textPrimary"
           variant="h5"
         >
-          {user.name}
+          {currentUser?.firstName}
         </Typography>
 
         <Typography
           color="textSecondary"
           variant="body2"
         >
-          {user.jobTitle}
+          {currentUser?.isAdmin ? 'Admin' : 'Member'}
         </Typography>
       </Box>
 

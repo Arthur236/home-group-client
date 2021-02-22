@@ -64,7 +64,7 @@ const logoutSuccess = (): LogoutActionInterface => ({
   type: actionTypes.LOGOUT,
 });
 
-export const login = (values: LoginInput, redirect: Function) => {
+export const login = (values: LoginInput, onSuccess: Function) => {
   return (dispatch: Dispatch<LoginActions>) => {
     dispatch(loginLoading(true));
 
@@ -80,7 +80,7 @@ export const login = (values: LoginInput, redirect: Function) => {
         dispatch(loginSuccess(data));
         dispatch(loginLoading(false));
 
-        redirect('/home');
+        onSuccess();
       })
       .catch((error) => {
         const err = handleError(error);

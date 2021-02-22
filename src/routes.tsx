@@ -10,6 +10,8 @@ import ForgotPassword from './components/Auth/PasswordReset/ForgotPassword';
 import ResetPassword from './components/Auth/PasswordReset/ResetPassword';
 import EmailSent from './components/Auth/PasswordReset/EmailSent';
 import ResetSuccessful from './components/Auth/PasswordReset/ResetSuccessful';
+import Members from './components/Members';
+import Profile from './components/Profile';
 
 export default (
   <Switch>
@@ -21,6 +23,8 @@ export default (
     <Route path='/reset-successful' exact component={ResetSuccessful} />
 
     <ProtectedRoute path='/home' exact component={Dashboard} />
+    <ProtectedRoute path='/members' exact component={Members} />
+    <ProtectedRoute path='/profile/:id' exact component={Profile} />
 
     <Route path='/' exact component={Login} />
 

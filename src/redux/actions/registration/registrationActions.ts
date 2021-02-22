@@ -48,7 +48,7 @@ const registerError = (error: any): RegisterErrorActionInterface => ({
   error
 });
 
-export const register = (values: any, redirect: Function) => {
+export const register = (values: any, onSuccess: Function) => {
   return (dispatch: Dispatch<RegisterActions>) => {
     dispatch(registerLoading(true));
 
@@ -57,7 +57,7 @@ export const register = (values: any, redirect: Function) => {
         dispatch(registerSuccess(res.data));
         dispatch(registerLoading(false));
 
-        redirect('/login');
+        onSuccess();
       })
       .catch((error) => {
         const err = handleError(error);

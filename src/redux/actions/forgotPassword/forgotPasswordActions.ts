@@ -50,7 +50,7 @@ const forgotPasswordError = (error: any): ForgotPasswordErrorActionInterface => 
   error,
 });
 
-export const forgotPassword = (values: ForgotPasswordInput, redirect: Function) => {
+export const forgotPassword = (values: ForgotPasswordInput, onSuccess: Function) => {
   return (dispatch: Dispatch<ForgotPasswordActions>) => {
     dispatch(forgotPasswordLoading(true));
 
@@ -62,7 +62,7 @@ export const forgotPassword = (values: ForgotPasswordInput, redirect: Function) 
         dispatch(forgotPasswordSuccess(data));
         dispatch(forgotPasswordLoading(false));
 
-        redirect('/email-sent');
+        onSuccess();
       })
       .catch((error) => {
         const err = handleError(error);

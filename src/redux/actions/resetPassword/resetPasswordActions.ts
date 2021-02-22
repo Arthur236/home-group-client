@@ -51,7 +51,7 @@ const resetPasswordError = (error: any): ResetPasswordErrorActionInterface => ({
   error,
 });
 
-export const resetPassword = (values: ResetPasswordInput, redirect: Function) => {
+export const resetPassword = (values: ResetPasswordInput, onSuccess: Function) => {
   return (dispatch: Dispatch<ResetPasswordActions>) => {
     dispatch(resetPasswordLoading(true));
 
@@ -63,7 +63,7 @@ export const resetPassword = (values: ResetPasswordInput, redirect: Function) =>
         dispatch(resetPasswordSuccess(data));
         dispatch(resetPasswordLoading(false));
 
-        redirect('/reset-successful');
+        onSuccess();
       })
       .catch((error) => {
         const err = handleError(error);

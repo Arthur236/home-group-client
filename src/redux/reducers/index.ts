@@ -6,12 +6,14 @@ import login from './login/loginReducer';
 import registration from './registration/registrationReducer';
 import forgotPassword from './forgotPassword/forgotPasswordReducer';
 import resetPassword from './resetPassword/resetPasswordReducer';
+import profile from './profile/fetchProfileReducer';
 
 const appReducer = combineReducers({
   login,
   registration,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  profile,
 });
 
 const rootReducer = (state: any, action: any) => {

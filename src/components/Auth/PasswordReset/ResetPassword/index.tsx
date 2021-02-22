@@ -7,7 +7,7 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
-import { Formik } from 'formik';
+import { useFormik } from 'formik';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -33,13 +33,24 @@ const ResetPassword = () => {
     newPassword2: ''
   };
 
-  const handleSubmit = (data: any) => {
+  const onSuccess = () => {
+    history.push('/reset-successful');
+  }
+
+  const handleSubmit = (values: any) => {
     const newData = {
-      ...data,
+      ...values,
       token: params.token
-    }
-    dispatch(resetPassword(newData, history.push));
+    };
+
+    dispatch(resetPassword(newData, onSuccess));
   };
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema: ResetPasswordSchema,
+    onSubmit: handleSubmit
+  });
 
   return (
     <MainWrapper>
@@ -53,69 +64,54 @@ const ResetPassword = () => {
           <Container maxWidth='sm'>
             {resetPasswordState.error && <StatusMessage error={resetPasswordState.error} />}
 
-            <Formik
-              initialValues={initialValues}
-              validationSchema={ResetPasswordSchema}
-              onSubmit={handleSubmit}
-            >
-              {({
-                  errors,
-                  handleBlur,
-                  handleChange,
-                  handleSubmit,
-                  touched,
-                  values
-                }) => (
-                <form onSubmit={handleSubmit}>
-                  <Box mb={3}>
-                    <Typography color='textPrimary' variant='h2'>
-                      Reset Password
-                    </Typography>
-                  </Box>
+            <form onSubmit={formik.handleSubmit}>
+              <Box mb={3}>
+                <Typography color='textPrimary' variant='h2'>
+                  Reset Password
+                </Typography>
+              </Box>
 
-                  <TextField
-                    error={Boolean(touched.newPassword && errors.newPassword)}
-                    fullWidth
-                    helperText={touched.newPassword && errors.newPassword}
-                    label='New Password'
-                    margin='normal'
-                    name='newPassword'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.newPassword}
-                    type='password'
-                    variant='outlined'
-                  />
+              <TextField
+                error={Boolean(formik.touched.newPassword && formik.errors.newPassword)}
+                fullWidth
+                helperText={formik.touched.newPassword && formik.errors.newPassword}
+                label='New Password'
+                margin='normal'
+                name='newPassword'
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                value={formik.values.newPassword}
+                type='password'
+                variant='outlined'
+              />
 
-                  <TextField
-                    error={Boolean(touched.newPassword && errors.newPassword2)}
-                    fullWidth
-                    helperText={errors.newPassword2}
-                    label='Confirm New Password'
-                    margin='normal'
-                    name='newPassword2'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.newPassword2}
-                    type='password'
-                    variant='outlined'
-                  />
+              <TextField
+                error={Boolean(formik.touched.newPassword && formik.errors.newPassword2)}
+                fullWidth
+                helperText={formik.errors.newPassword2}
+                label='Confirm New Password'
+                margin='normal'
+                name='newPassword2'
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                value={formik.values.newPassword2}
+                type='password'
+                variant='outlined'
+              />
 
-                  <Box my={2}>
-                    <Button
-                      color='primary'
-                      fullWidth
-                      size='large'
-                      type='submit'
-                      variant='contained'
-                      disabled={resetPasswordState.loading}
-                    >
-                      Reset Password
-                    </Button>
-                  </Box>
-                </form>
-              )}
-            </Formik>
+              <Box my={2}>
+                <Button
+                  color='primary'
+                  fullWidth
+                  size='large'
+                  type='submit'
+                  variant='contained'
+                  disabled={resetPasswordState.loading}
+                >
+                  Reset Password
+                </Button>
+              </Box>
+            </form>
           </Container>
         </motion.div>
       </Page>

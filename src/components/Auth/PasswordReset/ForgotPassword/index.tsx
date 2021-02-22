@@ -7,7 +7,7 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
-import { Formik } from 'formik';
+import { useFormik } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -29,12 +29,22 @@ const ForgotPassword = () => {
   const { forgotPassword: forgotPasswordState } = useSelector((state: AppState) => state);
 
   const initialValues = {
-    email: '',
+    email: ''
   };
 
-  const handleSubmit = (data: any) => {
-    dispatch(forgotPassword(data, history.push));
+  const onSuccess = () => {
+    history.push('/email-sent');
+  }
+
+  const handleSubmit = (values: any) => {
+    dispatch(forgotPassword(values, onSuccess));
   };
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema: ForgotPasswordSchema,
+    onSubmit: handleSubmit
+  });
 
   return (
     <MainWrapper>
@@ -48,55 +58,40 @@ const ForgotPassword = () => {
           <Container maxWidth='sm'>
             {forgotPasswordState.error && <StatusMessage error={forgotPasswordState.error} />}
 
-            <Formik
-              initialValues={initialValues}
-              validationSchema={ForgotPasswordSchema}
-              onSubmit={handleSubmit}
-            >
-              {({
-                  errors,
-                  handleBlur,
-                  handleChange,
-                  handleSubmit,
-                  touched,
-                  values
-                }) => (
-                <form onSubmit={handleSubmit}>
-                  <Box mb={3}>
-                    <Typography color='textPrimary' variant='h2'>
-                      Forgot Password
-                    </Typography>
-                  </Box>
+            <form onSubmit={formik.handleSubmit}>
+              <Box mb={3}>
+                <Typography color='textPrimary' variant='h2'>
+                  Forgot Password
+                </Typography>
+              </Box>
 
-                  <TextField
-                    error={Boolean(touched.email && errors.email)}
-                    fullWidth
-                    helperText={touched.email && errors.email}
-                    label='Email Address'
-                    margin='normal'
-                    name='email'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.email}
-                    type='email'
-                    variant='outlined'
-                  />
+              <TextField
+                error={Boolean(formik.touched.email && formik.errors.email)}
+                fullWidth
+                helperText={formik.touched.email && formik.errors.email}
+                label='Email Address'
+                margin='normal'
+                name='email'
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                value={formik.values.email}
+                type='email'
+                variant='outlined'
+              />
 
-                  <Box my={2}>
-                    <Button
-                      color='primary'
-                      fullWidth
-                      size='large'
-                      type='submit'
-                      variant='contained'
-                      disabled={forgotPasswordState.loading}
-                    >
-                      Send Reset Link
-                    </Button>
-                  </Box>
-                </form>
-              )}
-            </Formik>
+              <Box my={2}>
+                <Button
+                  color='primary'
+                  fullWidth
+                  size='large'
+                  type='submit'
+                  variant='contained'
+                  disabled={forgotPasswordState.loading}
+                >
+                  Send Reset Link
+                </Button>
+              </Box>
+            </form>
           </Container>
         </motion.div>
       </Page>

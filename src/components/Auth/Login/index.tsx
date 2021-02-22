@@ -7,7 +7,7 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
-import { Formik } from 'formik';
+import { useFormik } from 'formik';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -32,9 +32,19 @@ const Login = () => {
     password: ''
   };
 
-  const handleSubmit = (data: any) => {
-    dispatch(login(data, history.push));
+  const onSuccess = () => {
+    history.push('/home');
   };
+
+  const handleSubmit = (values: any) => {
+    dispatch(login(values, onSuccess));
+  };
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema: LoginSchema,
+    onSubmit: handleSubmit
+  });
 
   return (
     <MainWrapper>
@@ -48,76 +58,58 @@ const Login = () => {
           <Container maxWidth='sm'>
             {loginState.error && <StatusMessage error={loginState.error} />}
 
-            <Formik
-              initialValues={initialValues}
-              validationSchema={LoginSchema}
-              onSubmit={handleSubmit}
-            >
-              {({
-                  errors,
-                  handleBlur,
-                  handleChange,
-                  handleSubmit,
-                  touched,
-                  values
-                }) => (
-                <form onSubmit={handleSubmit}>
-                  <Box mb={3}>
-                    <Typography
-                      color='textPrimary'
-                      variant='h2'
-                    >
-                      Log in
-                    </Typography>
-                  </Box>
+            <form onSubmit={formik.handleSubmit}>
+              <Box mb={3}>
+                <Typography color='textPrimary' variant='h2'>
+                  Log in
+                </Typography>
+              </Box>
 
-                  <TextField
-                    error={Boolean(touched.email && errors.email)}
-                    fullWidth
-                    helperText={touched.email && errors.email}
-                    label='Email Address'
-                    margin='normal'
-                    name='email'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.email}
-                    type='email'
-                    variant='outlined'
-                  />
+              <TextField
+                error={Boolean(formik.touched.email && formik.errors.email)}
+                fullWidth
+                helperText={formik.touched.email && formik.errors.email}
+                label='Email Address'
+                margin='normal'
+                name='email'
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                value={formik.values.email}
+                type='email'
+                variant='outlined'
+              />
 
-                  <TextField
-                    error={Boolean(touched.password && errors.password)}
-                    fullWidth
-                    helperText={touched.password && errors.password}
-                    label='Password'
-                    margin='normal'
-                    name='password'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.password}
-                    type='password'
-                    variant='outlined'
-                  />
+              <TextField
+                error={Boolean(formik.touched.password && formik.errors.password)}
+                fullWidth
+                helperText={formik.touched.password && formik.errors.password}
+                label='Password'
+                margin='normal'
+                name='password'
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                value={formik.values.password}
+                type='password'
+                variant='outlined'
+              />
 
-                  <Box my={2}>
-                    <Button
-                      color='primary'
-                      fullWidth
-                      size='large'
-                      type='submit'
-                      variant='contained'
-                      disabled={loginState.loading}
-                    >
-                      Log In
-                    </Button>
-                  </Box>
+              <Box my={2}>
+                <Button
+                  color='primary'
+                  fullWidth
+                  size='large'
+                  type='submit'
+                  variant='contained'
+                  disabled={loginState.loading}
+                >
+                  Log In
+                </Button>
+              </Box>
 
-                  <Link to='/forgot-password' style={{ color: '#3f51b5' }}>
-                    Forgot Password?
-                  </Link>
-                </form>
-              )}
-            </Formik>
+              <Link to='/forgot-password' style={{ color: '#3f51b5' }}>
+                Forgot Password?
+              </Link>
+            </form>
           </Container>
         </motion.div>
       </Page>

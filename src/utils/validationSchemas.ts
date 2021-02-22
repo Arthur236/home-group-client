@@ -21,3 +21,9 @@ export const ResetPasswordSchema = Yup.object().shape({
   newPassword: Yup.string().min(6).max(255).required('Password is required'),
   newPassword2: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
 });
+
+export const ProfileSchema = Yup.object().shape({
+  email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+  firstName: Yup.string().min(2).max(255).required('First name is required'),
+  lastName: Yup.string().min(2).max(255).required('Last name is required'),
+});
