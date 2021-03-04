@@ -7,6 +7,7 @@ import registration from './registration/registrationReducer';
 import forgotPassword from './forgotPassword/forgotPasswordReducer';
 import resetPassword from './resetPassword/resetPasswordReducer';
 import profile from './profile/fetchProfileReducer';
+import updatePhoto from './profile/updatePhotoReducer';
 
 const appReducer = combineReducers({
   login,
@@ -14,6 +15,7 @@ const appReducer = combineReducers({
   forgotPassword,
   resetPassword,
   profile,
+  updatePhoto,
 });
 
 const rootReducer = (state: any, action: any) => {

@@ -73,7 +73,7 @@ export const login = (values: LoginInput, onSuccess: Function) => {
       .then(async (res) => {
         const data = res.data;
         const token = data?.token;
-        axios.defaults.headers.common.Authorization = token;
+        axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
         localStorage.setItem("token", token);
 

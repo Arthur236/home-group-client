@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { useFormik } from 'formik';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import {
   Avatar,
@@ -25,6 +25,7 @@ import DashboardWrapper from '../Wrappers/DashboardWrapper';
 import { AppState } from '../../redux/reducers';
 import { ProfileSchema } from '../../utils/validationSchemas';
 import { commonTransitionVariants } from '../../utils/animationVariants';
+import { updatePhoto } from '../../redux/actions/profile/updatePhotoActions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,6 +62,8 @@ const useStyles = makeStyles((theme) => ({
 const Profile = () => {
   const classes = useStyles();
 
+  const dispatch = useDispatch();
+
   const { profile } = useSelector((state: AppState) => state);
 
   const currentUser = profile.profile?.user;
@@ -73,6 +76,9 @@ const Profile = () => {
 
   const handlePhotoUpload = async (event: any) => {
     console.log(event.target.files[0]);
+    console.log(currentUser);
+
+    dispatch(updatePhoto(currentUser._id, event.target.files[0]));
   }
 
   const handleSubmit = async (values: any) => {
